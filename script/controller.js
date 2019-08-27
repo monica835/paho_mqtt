@@ -3,6 +3,7 @@
 // client=new Paho.Client()
 var btnconnect=document.getElementById("btn-connect");
 var btnpublish=document.getElementById("btn-publish");
+var wordtext=document.getElementById("word")
 
 
  var client=new Paho.Client("broker.hivemq.com",8000,"clientId");
@@ -16,6 +17,7 @@ client.onMessageArrived = onMessageArrived;
 
 
 // called when the client connects
+
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
@@ -44,7 +46,15 @@ btnconnect.addEventListener("click",function(e){
 btnpublish.addEventListener("click",function(e){
     e.preventDefault();
     console.log("publish button.....")
-    message = new Paho.Message("Hello World!!!!!!!!!!!");
+    message = new Paho.Message(document.getElementById("word").value);
     message.destinationName = "World";
     client.send(message);
 })
+// wordtext.addEventListener("input",function(e){
+//     e.preventDefault();
+//     console.log("publish button.....")
+//     message = new Paho.Message(document.getElementById("word").value);
+//     message.destinationName = "World";
+//     client.send(message);
+    
+// })
