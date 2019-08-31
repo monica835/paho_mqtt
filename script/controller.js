@@ -1,60 +1,109 @@
-// Create a client instance
-// var client = new Paho.MQTT.Client(location.hostname, Number(location.port), "clientId");
-// client=new Paho.Client()
-var btnconnect=document.getElementById("btn-connect");
-var btnpublish=document.getElementById("btn-publish");
-var wordtext=document.getElementById("word")
+$('#btn-connect').click(function(){
+	client = mqtt.connect("ws://broker.hivemq.com:8000/mqtt");
+	client.subscribe($("#topic").val());
+	console.log('connect button when clicked');
+	 $("#status").text("Connecting...");
+	// $("#status").removeClass("alert-secondary");
+	// $("#status").addClass("alert-warning");
+	client.on("connect", function(){
+		 $("#status").text("Successfully connected!!!!");
+		// $("#status").removeClass("alert-warning");
+		// $("#status").addClass("alert-secondary");
+		Swal.fire({
+			position: 'center',
+			type: 'success!!',
+			title: 'your sucessfully connected to the broker!',
+			showConfirmButton: false,
+			timer: 2000
+		  })
+		console.log("success");
+	});
 
+	$("#btn-disconnect").click(function() {
+		Swal.fire({
+			title: 'Are you sure?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes!'
+		  }).then((result) => {
+			if (result.value) {
+				client.end();
+			  Swal.fire(
+				'Disconnected!',
+				'Your are disconnected to the broker.',
+				'success'
+			  );
+			  $("#status").text("Disconnected");
+				// $("#status").removeClass("alert-warning");
+				// $("#status").addClass("alert-secondary");
+			}
+		  })
+		
+	});
 
- var client=new Paho.Client("broker.hivemq.com",8000,"clientId");
+	$("#btn-publish").click(function() {
+		var topic = $("#topic").val();
+		var payload = $("#message").val();
+		if (topic == "" && payload == "") {
+			Swal.fire({
+			  type: 'error',
+			  title: 'Oops...',
+			  text: 'Please provide inputs!',
+			});
+		}
+		else { 
+			client.publish(topic,payload, function(err) {
+				  if (err){
+					Swal.fire({
+						type: 'error',
+						title: 'Oops...',
+						text: 'There is an error!',
+					  });
+				} else {
+					console.log("published")
+					Swal.fire(' topic has been published successfully!')
+				}
+			});
+			
+			
+		}
 
-// set callback handlers
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
+	});
+	$("#btn-subscribe").click(function() {
+		var subscribe = $("#topic-sub").val();
+		var topic = $("#topic").val();
+		if (subscribe != topic) {
+			Swal.fire({
+			  type: 'error',
+			  title: 'Oops...',
+			  text: 'Topic is not available!',
+			});
+		}
+		else if (subscribe == topic && topic !== "") {
+			client.subscribe(topic, function(err) {
+				if(err) {
+					Swal.fire({
+						type: 'error',
+						title: 'Oops...',
+						text: 'An error occurs!',
+					  });
+				} else {
+					Swal.fire('Subscribed successfully!');
+				}
+			});
+			
+		}
+			
+	})
+	client.on("message", function (topic, payload) {
+		// console.log([topic, payload].join(": "));
+		var row = $("<tr>");
+		$("<td>").text(topic).appendTo($(row));
+		$("<td>").text(payload).appendTo($(row));
+		$("<td>").text(moment().format('MMMM Do YYYY, h:mm:ss a')).appendTo($(row));
+		$("#tbl-body").append($(row));
 
-// connect the client
-// client.connect({onSuccess:onConnect});
-
-
-// called when the client connects
-
-function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  console.log("onConnect");
-  client.subscribe("World");
-//   message = new Paho.Message("Hello World!!!!!!!!!!!");
-//   message.destinationName = "World";
-//   client.send(message);
-}
-
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:"+responseObject.errorMessage);
-  }
-}
-
-// called when a message arrives
-function onMessageArrived(message) {
-  console.log("onMessageArrived:"+message.payloadString);
-}
-btnconnect.addEventListener("click",function(e){
-    e.preventDefault();
-    console.log("connect button.....")
-    client.connect({onSuccess:onConnect});
-})
-btnpublish.addEventListener("click",function(e){
-    e.preventDefault();
-    console.log("publish button.....")
-    message = new Paho.Message(document.getElementById("word").value);
-    message.destinationName = "World";
-    client.send(message);
-})
-// wordtext.addEventListener("input",function(e){
-//     e.preventDefault();
-//     console.log("publish button.....")
-//     message = new Paho.Message(document.getElementById("word").value);
-//     message.destinationName = "World";
-//     client.send(message);
-    
-// })
+  })
+});
