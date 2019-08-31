@@ -1,14 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mqtt</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    html body{
+        height: 100%;
+    }
+    .card{
+        height: 370px;
+        color:cornflowerblue;
+    }
+    .h4 {
+        background-color: burlywood;
+        padding: 5px;
+        color: black;
+        border-radius: 10px;
+    }
+</style>
 
 <body>
-    <h1>Paho Mqtt</h1>
-    <p> My MQTT Web App</p>
-    <button id="btn-connect">Connect</button>
-    <button id="btn-publish">Publish</button>
-    <input id="word" type="text" >
+    <div class="jumbotron text-center">
+        <h1>MOWS</h1>
+        <p>MQTT on Web Browser</p> 
+    </div>
+    <div class="container">
+        <div class="row">
+            <!-- column 1 -->
+            <div class="col">
+                <div class="card">
+                    <div class="container">
+                        <center>
+                            <div class="card-header">
+                                <div class="text-center h4">Broker</div>
+
+                            </div>
+                            <div class="card-body">
+                                <label for="input-broker-ws"> Address:</label>
+                                <input type="text" class="form-control" id="input-broker-ws" value="ws://broker.hivemq.com:8000/mqtt"><br>
+
+                                <button id="btn-connect" class="btn btn-outline-success">Connect</button>
+
+                                <button class="btn btn-outline-danger pure-button btn-disconnect">Disconnect</button>
+                            </div>
+                        </center>
+                        <br>
+                        <div class="card-footer">
+                            <div id="status" class="text-center alert alert-secondary">
+                                Disconnected
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- column 2 -->
+            <div class="col">
+                <div class="card">
+                    <div class="container">
+                        <center>
+                            <div class="card-header">
+                                <div class="text-center h4">Publisher</div>
+                            </div>
+                        </center>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="text-left">Topic:</label>
+                                <input type="text" class="form-control" id="topic" value="demo">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-justify">Message:</label>
+                                <input type="text" class="form-control" id="message" value="hi">
+                            </div>
+                            <center>
+                                <button id="btn-pub" class="btn btn-outline-success">Publish</button></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- column 3 -->
+            <div class="col">
+                <div class="card">
+                    <div class="container">
+                        <center>
+                            <div class="card-header">
+                                <div class="text-center h4">Subscriber</div>
+                            </div>
+                        </center>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="text-left">Topic:</label>
+                                <input type="text" class="form-control" id="topic-sub" value="demo">
+                            </div>
+
+                            <center>
+                                <button id="btn-sub" class="btn btn-outline-success">Subscribe</button></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- row1 -->
+        <br><br>
+        <div class="row">
+           <table class="text-center table table-hover table-bordered">
+               <thead class="table-success">
+                   <tr>
+                       <th>Topic</th>
+                       <th>Message</th>
+                       <th>Timestamp</th>
+                   </tr>
+               </thead>
+               <tbody id="tbl-body">
+
+               </tbody>
+           </table>
+        </div>
+        
+    </div>
+
+    <!-- script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="script/paho-mqtt.js"></script>
+    <script src="script/controller.js"></script>
 </body>
-<script type="text/javascript" src="script/paho-mqtt.js"></script>
-<script type="text/javascript" src="script/controller.js"></script>
 
 </html>
