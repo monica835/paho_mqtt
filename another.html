@@ -14,13 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
+
 
 </head>
 
 <body>
     <center>
-        <h1 class="title"  style><u>MQTT Mows</u></h1>
+        <h1 class="title" style><u>MQTT Mows</u></h1>
     </center>
     <br><br>
     <hr>
@@ -32,16 +32,34 @@
                 <li><input type="text" id="address" value="ws://broker.hivemq.com:8000/mqtt"></li>
             </ul>
             <hr>
-            <button class="signup" id="btn-connect">Connect</button>
+            <button class="mqttconnections" id="btn-connect">Connect</button>
             <br><br>
-            <button class="signup" id="btn-disconnect">Disconnect</button>
+            <button class="mqttconnections" id="btn-disconnect">Disconnect</button>
             <br><br>
             <div class="card-footer">
-                    <div id="status" class="text-center alert alert-secondary">
-                        Disconnected!
-                    </div>
+                <h2 style="margin-left:5%; font-size:15px;">Status:</h2>
+                <div id="status" class="text-center alert alert-secondary">
+                    Disconnected!
                 </div>
+            </div>
+            <div class="row">
+                <table class="text-center table table-hover table-bordered">
+                    <thead class="table-success">
+                        <h3 style="font-size:20px;">Incoming Message:</h3>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Message</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl-body">
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
+
 
         <div class="plan plan3">
             <div class="header">Publisher</div>
@@ -49,13 +67,33 @@
             <ul>
                 <li><input type="text" id="topic" value="demo"></li>
             </ul>
-            <div class="theme-topic">Message:</div>
+            <div class="theme-topic">Payload:</div>
             <ul>
                 <li><input type="text" id="message" value="hi"></li>
             </ul>
             <hr>
-            <button class="signup" id="btn-publish">Publish</button>
+            <button class="mqttconnections" id="btn-publish">Publish</button>
+            <br><br>
+            <br><br><br><br><br>
+            <div class="row">
+                <table class="text-center table table-hover table-bordered">
+                    <thead class="table-success">
+                        <h3 style="font-size:20px;"> Message:</h3>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Message</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl-body-publish">
+
+                    </tbody>
+                </table>
+            </div>
+
+
         </div>
+
         <div class="plan plan4">
             <div class="header">Subscriber</div>
 
@@ -65,27 +103,34 @@
 
             </ul>
             <hr>
-            <button  class="signup" id="btn-subscribe">Subscribe</button>
-        </div>
-    </div>
-    </div>
-    <br><br>
-    <center>
-        <div class="row">
-            <table class="text-center table table-hover table-bordered">
-                <thead class="table-success">
-                    <tr>
-                        <th>Topic</th>
-                        <th>Message</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody id="tbl-body">
+            <center>
+                <button class="mqttconnections" id="btn-subscribe">Subscribe</button>
+                <br><br>
+                <button class="mqttconnections" id="btn-unsubsribe">Unsubscribe</button>
+                <br><br>
+            </center><BR><br><br><br><br><br><br>
+            <div class="row">
+                <table class="text-center table table-hover table-bordered">
+                    <thead class="table-success">
+                        <h3 style="font-size:20px;"> Incoming Message:</h3>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl-body-subscribe">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </center>
+    </div>
+
+    </div>
+
+
+    </div>
+    </div>
 
 </body>
 <script type="text/javascript" src="script/paho-mqtt.js"></script>

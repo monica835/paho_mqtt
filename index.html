@@ -1,3 +1,20 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@monica835 
+1
+00alchristophergwapo/mows
+ Code Issues 0 Pull requests 0 Projects 0 Wiki Security Insights
+mows/index.html
+ 2ndyrGroupA MQTT on Web Browser
+91f16f9 1 hour ago
+178 lines (162 sloc)  7.25 KB
+  
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +33,7 @@
         height: 100%;
     }
     .card{
-        height: 370px;
+        height: 100%;
         color:cornflowerblue;
     }
     .h4 {
@@ -24,6 +41,14 @@
         padding: 5px;
         color: black;
         border-radius: 10px;
+    }
+    .my-custom-scrollbar {
+        position: relative;
+        height: 300px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
     }
 </style>
 
@@ -52,11 +77,26 @@
                                 <button class="btn btn-outline-danger pure-button btn-disconnect">Disconnect</button>
                             </div>
                         </center>
-                        <br>
-                        <div class="card-footer">
+                        <div >
+                            Status: <br>
                             <div id="status" class="text-center alert alert-secondary">
                                 Disconnected
                             </div>
+                        </div>
+                        <div class="card-footer"></div>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">Incoming message: <br><br>
+                            <table class="text-center table table-hover table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Topic</th>
+                                        <th>Message</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl-body">
+                
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -80,7 +120,22 @@
                                 <input type="text" class="form-control" id="message" value="hi">
                             </div>
                             <center>
-                                <button id="btn-pub" class="btn btn-outline-success">Publish</button></center>
+                                <button id="btn-pub" class="btn btn-outline-success" style="padding:13px">Publish</button></center>
+                        </div>
+                        <div class="card-footer"></div>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar"> message: <br><br>
+                            <table class="text-center table table-hover table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Topic</th>
+                                        <th>Message</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl-body-pub">
+                
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -101,7 +156,23 @@
                             </div>
 
                             <center>
-                                <button id="btn-sub" class="btn btn-outline-success">Subscribe</button></center>
+                                <button id="btn-sub" class="btn btn-outline-success">Subscribe</button>
+                                <button id="btn-unsub" class="btn btn-outline-danger">Unsubscribe</button>
+                            </center>
+                        </div><br><br><br><br>
+                        <div class="card-footer"></div>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">Incoming message: <br><br>
+                            <table class="text-center table table-hover table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Topic</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl-body-sub">
+                
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -109,30 +180,27 @@
             
         </div>
 
-        <!-- row1 -->
-        <br><br>
-        <div class="row">
-           <table class="text-center table table-hover table-bordered">
-               <thead class="table-success">
-                   <tr>
-                       <th>Topic</th>
-                       <th>Message</th>
-                       <th>Timestamp</th>
-                   </tr>
-               </thead>
-               <tbody id="tbl-body">
-
-               </tbody>
-           </table>
-        </div>
+        
         
     </div>
 
     <!-- script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
-    <script src="script/paho-mqtt.js"></script>
-    <script src="script/controller.js"></script>
+    <script src="scripts/browserMqtt.js"></script>
+    <script src="scripts/controller.js"></script>
 </body>
 
 </html>
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
